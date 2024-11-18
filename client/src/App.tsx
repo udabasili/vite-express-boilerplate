@@ -1,12 +1,24 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {getData} from "./api.ts";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [message, setMessage] = useState('');
 
-  return (
+    // @ts-ignore
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getData();
+            setMessage(result?.status || 'The server is not responding');
+        }
+
+            fetchData();
+        }, [])
+
+
+    return (
     <>
       <div>
         <a href="https://vite.dev" target="_blank">
@@ -18,9 +30,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+          {message}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
