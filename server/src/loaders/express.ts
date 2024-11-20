@@ -2,7 +2,9 @@ import express, {Application, NextFunction} from 'express';
 import cors from 'cors';
 import routes from '@/api';
 import config from "@/config";
-import path from "path";
+import {isCelebrateError} from "celebrate";
+import cookieParser from 'cookie-parser';
+import {ErrorHandler, ErrorHandlerProps} from "@/api/middlewares/errorHandler";
 
 export default ({ app }: { app: Application }) => {
 	/**
@@ -21,34 +23,31 @@ export default ({ app }: { app: Application }) => {
 
 	app.use(express.json());
 
+	app.use(cookieParser())
+
+
 	app.use(express.urlencoded({ extended: true }));
 
 	app.use(cors());
-
-
-//only for production
-	if (process.env.NODE_ENV === 'production') {
-		app.use(express.static(path.resolve(__dirname, '../public')));
-		app.get('*', (req, res) => {
-				res.sendFile(path.resolve(__dirname, '../public/index.html'));
-			}
-		);
-	}
 
 	app.use(config.api.prefix, routes());
 
 	/// error handlers
 
 
-	app.use((err: { status: any; message: any; }, req: any, res: {
-		status: (arg0: any) => void;
-		json: (arg0: { errors: { message: any; }; }) => void;
-	}, next: any) => {
+	app.use((req, res, next) => {
+		const error = new ErrorHandler('Not Found', 404);
+		return next(error);
+	});
+
+	app.use((err: ErrorHandlerProps, req: any, res: any, next: any) => {
+		if (isCelebrateError(err)) {
+			const errorBody = err.details.get('body')?.message; // 'details' is a Map()
+			err.message = errorBody || '';
+		}
 		res.status(err.status || 500);
-		res.json({
-			errors: {
-				message: err.message,
-			},
+		return res.json({
+			message: err.message,
 		});
 	});
 

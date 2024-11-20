@@ -19,5 +19,9 @@ export default {
         prefix: '/api',
     },
     mongodbUri: process.env.MONGODB_URI,
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET as string,
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET as string,
+    accessTokenExpiration: process.env.ACCESS_TOKEN_EXPIRY,
+    refreshTokenExpiration: process.env.REFRESH_TOKEN_EXPIRY
 
 }
