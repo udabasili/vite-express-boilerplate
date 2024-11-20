@@ -6,8 +6,8 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 });
 
 const logger = createLogger({
-	level: 'info',
-	format: combine(label({ label: 'right meow!' }), timestamp(), myFormat),
+	level: 'silly',
+	format: combine(label({ label: 'Server!' }), timestamp(), myFormat),
 	defaultMeta: { service: 'user-service' },
 	transports: [
 		//
@@ -26,7 +26,7 @@ const logger = createLogger({
 if (process.env.NODE_ENV !== 'production') {
 	logger.add(
 		new transports.Console({
-			format: combine(label({ label: 'SyncPad Server' }), timestamp(), myFormat),
+			format: combine(label({ label: 'Canvas Room Server' }), timestamp(), myFormat),
 		})
 	);
 }
