@@ -3,7 +3,7 @@ import { Router } from 'express';
 const router = Router();
 
 // Example API route
-router.get('/status', (req, res) => {
+router.get('/atus', (req, res) => {
     res.json({ status: 'Hello From Express' });
 });
 
