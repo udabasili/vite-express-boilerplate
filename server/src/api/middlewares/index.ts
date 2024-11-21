@@ -1,7 +1,7 @@
-import setCurrentUser from './setCurrentUser';
-import confirmAuthentication from './confirmAuthentication';
+import setCurrentUser from './setCurrentUser'
+import confirmAuthentication from './confirmAuthentication'
 
 export default {
-    setCurrentUser,
-    confirmAuthentication,
-};
+  setCurrentUser,
+  confirmAuthentication
+}

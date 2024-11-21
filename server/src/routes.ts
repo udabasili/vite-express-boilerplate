@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router } from 'express'
 
-const router = Router();
+const router = Router()
 
 // Example API route
 router.get('/atus', (req, res) => {
-    res.json({ status: 'Hello From Express' });
-});
+  res.json({ status: 'Hello From Express' })
+})
 
-export default router;
+export default router

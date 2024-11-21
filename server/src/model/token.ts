@@ -1,16 +1,15 @@
-import {model, Schema, Types} from "mongoose";
+import { model, Schema } from 'mongoose'
 
-const tokenSchema = new Schema ({
-    refreshToken:{
-        type: String,
-        required: true,
-        unique: true
-    },
-    userId: {
-        type: String,
-        required: true
-    }
-
+const tokenSchema = new Schema({
+  refreshToken: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  userId: {
+    type: String,
+    required: true
+  }
 })
 
-export const Token = model('Token',tokenSchema)
+export const Token = model('Token', tokenSchema)
