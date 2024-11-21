@@ -1,24 +1,28 @@
-import express from 'express';
-import { createServer } from 'http';
-import config from "@/config";
-import {initializeIO} from "@/loaders/socket";
+import express from 'express'
+import { createServer } from 'http'
+import config from '@/config'
+import { initializeIO } from '@/loaders/socket'
 
 async function startServer() {
-    const app = express();
+  const app = express()
 
-    await require('./loaders').default({expressApp: app});
+  //ignore @typescript-eslint/no-require-imports rule
 
-    const server = createServer(app);
-    //add socket.io
+  await require('./loaders').default({ expressApp: app })
 
-// Initialize Socket.IO
-    initializeIO(server);
-    server.listen(config.port, () => {
-        console.log(`Server is running on http://localhost:${config.port}`);
-    }).on('error', (err) => {
-        console.error(err);
-        process.exit(1);
+  const server = createServer(app)
+  //add socket.io
+
+  // Initialize Socket.IO
+  initializeIO(server)
+  server
+    .listen(config.port, () => {
+      console.log(`Server is running on http://localhost:${config.port}`)
+    })
+    .on('error', (err) => {
+      console.error(err)
+      process.exit(1)
     })
 }
 
-startServer();
+startServer()
